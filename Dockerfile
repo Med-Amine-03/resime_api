@@ -1,5 +1,5 @@
-# Use official Python 3.13 slim image
-FROM python:3.13-slim
+# Use official Python 3.12 slim image
+FROM python:3.12-slim
 
 # Install system dependencies (for Chrome + undetected_chromedriver)
 RUN apt-get update && apt-get install -y \
@@ -23,6 +23,7 @@ RUN apt-get update && apt-get install -y \
     libgbm1 \
     libpango-1.0-0 \
     xdg-utils \
+    python3.13-distutils \
     --no-install-recommends && \
     rm -rf /var/lib/apt/lists/*
 
@@ -39,8 +40,6 @@ WORKDIR /app
 # Copy requirements
 COPY requirements.txt .
 
-# Install distutils
-RUN apt-get update && apt-get install -y python3-distutils
 
 # Install Python dependencies
 RUN pip install --upgrade pip
