@@ -39,6 +39,9 @@ WORKDIR /app
 # Copy requirements
 COPY requirements.txt .
 
+# Install distutils
+RUN apt-get update && apt-get install -y python3-distutils
+
 # Install Python dependencies
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
