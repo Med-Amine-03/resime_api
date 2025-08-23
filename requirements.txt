@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+python-multipart
+pydantic
+python-dotenv
+requests
+pdfplumber
+python-docx
+reportlab
+huggingface-hub
+regex
+undetected-chromedriver
+selenium
