@@ -17,6 +17,19 @@ def linkedin_job_scraper(keywords, location, LINKEDIN_EMAIL, LINKEDIN_PASSWORD, 
     options.add_argument("--disable-gpu")
     options.add_argument("--disable-software-rasterizer")
     options.add_argument("--window-size=1920,1080")
+    options.add_argument("--disable-extensions")
+    options.add_argument("--disable-background-networking")
+    options.add_argument("--disable-sync")
+    options.add_argument("--disable-translate")
+    options.add_argument("--no-first-run")
+    options.add_argument("--disable-web-security")
+    options.add_argument("--disable-features=NetworkService,NetworkServiceInProcess")
+    prefs = {
+    "profile.managed_default_content_settings.images": 2,
+    "profile.managed_default_content_settings.stylesheets": 2,
+    "profile.managed_default_content_settings.fonts": 2
+    }
+    options.add_experimental_option("prefs", prefs)
     driver = uc.Chrome(options=options)
     driver.set_page_load_timeout(180)  # 3 minutes
     driver.set_script_timeout(180)
