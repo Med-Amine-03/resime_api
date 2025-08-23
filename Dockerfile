@@ -22,7 +22,7 @@ RUN apt-get update && apt-get install -y \
     libgbm1 \
     libpango-1.0-0 \
     xdg-utils \
-    python3.10-distutils \
+    python3-venv \
     --no-install-recommends && \
     rm -rf /var/lib/apt/lists/*
 
