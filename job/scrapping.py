@@ -11,10 +11,15 @@ from job.keyword import extract_keywords
 
 def linkedin_job_scraper(keywords, location, LINKEDIN_EMAIL, LINKEDIN_PASSWORD, max_jobs=10):
     options = uc.ChromeOptions()
-    options.add_argument("--headless=new") 
+    options.headless = True 
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-gpu")
+    options.add_argument("--disable-software-rasterizer")
+    options.add_argument("--window-size=1920,1080")
     driver = uc.Chrome(options=options)
+    driver.set_page_load_timeout(180)  # 3 minutes
+    driver.set_script_timeout(180)
 
     try:
         # 1️⃣ Login
@@ -24,16 +29,16 @@ def linkedin_job_scraper(keywords, location, LINKEDIN_EMAIL, LINKEDIN_PASSWORD, 
         driver.find_element(By.ID, "password").send_keys(LINKEDIN_PASSWORD)
         driver.find_element(By.XPATH, "//button[@type='submit']").click()
         print("✅ Login successful")
-        time.sleep(3)
+        time.sleep(5)
         
 
         search_url = f"https://www.linkedin.com/jobs/search/?keywords={keywords}&location={location}"
         driver.get(search_url)
         print(f"🔍 Searching: {keywords} in {location}")
-        time.sleep(3)
+        time.sleep(5)
 
         jobs=[]
-        wait = WebDriverWait(driver, 10)
+        wait = WebDriverWait(driver, 30)
         try:
                 job_cards = wait.until(EC.presence_of_all_elements_located(
                     (By.CSS_SELECTOR, ".jobs-search__results-list li")
@@ -53,7 +58,7 @@ def linkedin_job_scraper(keywords, location, LINKEDIN_EMAIL, LINKEDIN_PASSWORD, 
                     driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
                     time.sleep(0.5)
                     card.click()
-                time.sleep(1.5)
+                time.sleep(2)
 
                 retries = 3
                 for attempt in range(retries):
